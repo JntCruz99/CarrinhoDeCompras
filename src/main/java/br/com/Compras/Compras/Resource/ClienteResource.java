@@ -1,6 +1,8 @@
 package br.com.Compras.Compras.Resource;
 
 import br.com.Compras.Compras.Entity.Cliente;
+import br.com.Compras.Compras.Entity.enums.Status;
+import br.com.Compras.Compras.Repository.ClienteRepository;
 import br.com.Compras.Compras.Service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class ClienteResource {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping
     public ResponseEntity<List<Cliente>> buscarCliente(){
@@ -61,6 +66,10 @@ public class ClienteResource {
         }catch (IllegalAccessException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
         }
+    }
+    @GetMapping("/pendente")
+    public ResponseEntity<?> seila(){
+        return ResponseEntity.status(HttpStatus.OK).body(clienteRepository.findByCarrinhos_Status(Status.PENDENTE));
     }
 
 }

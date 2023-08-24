@@ -1,6 +1,7 @@
 package br.com.Compras.Compras.Resource;
 
 import br.com.Compras.Compras.Entity.Carrinho;
+import br.com.Compras.Compras.Entity.enums.Status;
 import br.com.Compras.Compras.Repository.CarrinhoRepository;
 import br.com.Compras.Compras.Service.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class CarrinhoResource {
         }catch (IllegalAccessException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/pendente")
+    public ResponseEntity<?> seila(){
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoRepository.findByStatus(Status.PENDENTE));
     }
 
 }

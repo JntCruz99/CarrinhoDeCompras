@@ -36,10 +36,8 @@ public class CarrinhoService {
             Carrinho carrinho = new Carrinho(Status.PENDENTE, clienteOptional.get(),
                     listaproduto);
              return carrinhoRepository.save(carrinho);
-        }else if (produtoOptional.isPresent()){
-             throw new IllegalAccessException("O cliente de ID: " + idCliente + " não foi encontrado");
         }else {
-            throw new IllegalAccessException("O Produto de ID: " + idProduto + " não foi encontrado");
+             throw new IllegalAccessException("O cliente de ID: " + idCliente + " não foi encontrado");
         }
     }
 
