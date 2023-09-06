@@ -1,6 +1,8 @@
 package br.com.Compras.Compras.Service;
 
+import br.com.Compras.Compras.Entity.Carrinho;
 import br.com.Compras.Compras.Entity.Cliente;
+import br.com.Compras.Compras.Entity.enums.Status;
 import br.com.Compras.Compras.Repository.ClienteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,13 @@ public class ClienteService {
         }else {
             throw new RuntimeException("O cliente de ID " + id +" não foi encontrado");
         }
-
     }
 
+    public List<Carrinho> listaDeCarrinhos(Long idcliente, Status status){
+        return clienteRepository.findCarrinhosPendentesByClienteId(idcliente,status);
+    }
+    public Optional<Cliente> ByCliente(String nome){
+        return clienteRepository.findByNome(nome);
+    }
 
 }

@@ -3,6 +3,9 @@ package br.com.Compras.Compras.Resource;
 import br.com.Compras.Compras.Entity.Produto;
 import br.com.Compras.Compras.Service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +19,9 @@ public class ProdutoResource {
     private ProdutoService produtoService;
 
     @GetMapping
-    public ResponseEntity<?> listarProdutos(){
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
+    public ResponseEntity<Page<Produto>> listarProdutos(@PageableDefault(page = 0, size = 6)Pageable pageable) {
+        Page<Produto> produtos = produtoService.findAll(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(produtos);
     }
 
     @GetMapping("/{id}")

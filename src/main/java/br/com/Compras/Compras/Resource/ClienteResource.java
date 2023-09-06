@@ -62,14 +62,20 @@ public class ClienteResource {
         try {
             Optional<Cliente> cliente =  clienteService.findById(id);
             clienteService.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Cliente" + cliente.get().getNome() + "Deletado com sucesso");
+            return ResponseEntity.status(HttpStatus.OK).body("Cliente" + cliente.get().getNome() + "Deletado com sucesso");
         }catch (IllegalAccessException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: " + e.getMessage());
         }
     }
     @GetMapping("/pendente")
-    public ResponseEntity<?> seila(){
+    public ResponseEntity<?> status(){
         return ResponseEntity.status(HttpStatus.OK).body(clienteRepository.findByCarrinhos_Status(Status.PENDENTE));
+    }
+
+    @GetMapping("/{nomeCliente}")
+    public ResponseEntity<?> procurarNome(@PathVariable String nome){
+        Optional<Cliente> cliente = clienteService.ByCliente(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(cliente.get());
     }
 
 }
